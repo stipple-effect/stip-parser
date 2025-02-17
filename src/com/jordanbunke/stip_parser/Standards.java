@@ -9,7 +9,7 @@ public final class Standards {
     private static final String
             NATIVE_CODE = "native_standard",
             PALETTE_CODE = "palette_standard";
-    private static final Path PROGRAM_FILE = Path.of("program");
+    private static final Path RES_FILE = Path.of("standards");
 
     public static String NATIVE = "1.0", PALETTE = "1.0";
 
@@ -19,7 +19,7 @@ public final class Standards {
 
     private static void readProgramFile() {
         final String content = FileIO.readResource(
-                ResourceLoader.loadResource(PROGRAM_FILE), "Program file");
+                ResourceLoader.loadResource(RES_FILE), "");
 
         final SerialBlock[] blocks = ParserSerializer
                 .deserializeBlocksAtDepthLevel(content);
