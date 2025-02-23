@@ -129,8 +129,7 @@ public final class ParserSerializer {
         return sb.toString();
     }
 
-    // TODO - IRProject w/ save association
-    public static IRState load(final String file, final Path filepath) {
+    public static IRState load(final String file) {
         final String contents = file
                 .replaceAll("\n", "")
                 .replaceAll("\r", "")
@@ -522,9 +521,10 @@ public final class ParserSerializer {
         return attributes;
     }
 
-    private static void serializeSimpleAttributes(
+    @SafeVarargs
+    public static void serializeSimpleAttributes(
             final StringBuilder sb, final int indentLevel,
-            final Pair<String, Object>[] tagValuePairs
+            final Pair<String, Object>... tagValuePairs
     ) {
         for (Pair<String, Object> tvPair : tagValuePairs) {
             indent(sb, indentLevel + 1);
