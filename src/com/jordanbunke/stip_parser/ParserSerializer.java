@@ -313,14 +313,16 @@ public final class ParserSerializer {
 
         final int LENGTH_OF_SECTION = 2, R = 0, G = 2, B = 4, A = 6;
 
+        final boolean opaque = contents.length() == A;
+
         final int r = ParseHex.hexToInt(contents.substring(
                 R, R + LENGTH_OF_SECTION)),
                 g = ParseHex.hexToInt(contents.substring(
                         G, G + LENGTH_OF_SECTION)),
                 b = ParseHex.hexToInt(contents.substring(
                         B, B + LENGTH_OF_SECTION)),
-                a = ParseHex.hexToInt(contents.substring(
-                        A, A + LENGTH_OF_SECTION));
+                a = opaque ? 0xff : ParseHex.hexToInt(
+                        contents.substring(A, A + LENGTH_OF_SECTION));
 
         return new Color(r, g, b, a);
     }
@@ -586,6 +588,8 @@ public final class ParserSerializer {
         if (c.getAlpha() == 0 && !preserveRGBForTransparent)
             return TRANSPARENT;
 
+        final boolean opaque = c.getAlpha() == 0xff;
+
         final String r = Integer.toHexString(c.getRed()),
                 g = Integer.toHexString(c.getGreen()),
                 b = Integer.toHexString(c.getBlue()),
@@ -594,7 +598,7 @@ public final class ParserSerializer {
         return (r.length() == 1 ? ("0") + r : r) +
                 (g.length() == 1 ? ("0") + g : g) +
                 (b.length() == 1 ? ("0") + b : b) +
-                (a.length() == 1 ? ("0") + a : a);
+                (opaque ? "" : (a.length() == 1 ? ("0") + a : a));
     }
 
     private static StringBuilder openWithTag(
