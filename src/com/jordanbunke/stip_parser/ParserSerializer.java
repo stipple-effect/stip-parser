@@ -459,7 +459,7 @@ public final class ParserSerializer {
         sb.append(serializeOnionSkin(layer.onionSkin()));
 
         if (layer.celsLinked())
-            sb.append(serializeImage(layer.getCel(0), false, true));
+            sb.append(serializeImage(layer.linkedContent(), false, true));
         else {
             // frames tag opener
             indent(sb, indentLevel + 1);
